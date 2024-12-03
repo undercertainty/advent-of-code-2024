@@ -25,6 +25,7 @@ solve_aoc_02_part1(FileName, Out):-
     include(safe_report, Reports, SafeReports),
     length(SafeReports, Out).
 
+
 s([Report]) --> line(Report).
 
 s([Report|Reports]) --> line(Report),
@@ -40,8 +41,7 @@ line([N|Rest]) --> number(N),
 % Reports are safe if adjacent numbers are all between 1 and 3 inclusive
 
 safe_report([ReportHead|ReportBack]):-
-    reverse([ReportHead|ReportBack], [_|Lr]),
-    reverse(Lr, ReportFront),
+    append(ReportFront, [_], [ReportHead|ReportBack]),
     maplist([X, Y, Z]>>(Z is X-Y), ReportFront, ReportBack, Differences),
     (
         exclude(call(between(1, 3)), Differences, [])
