@@ -12,7 +12,6 @@
 :- use_module(library(lists)).
 :- use_module(library(assoc)).
 :- use_module(library(readutil)).
-:- use_module(library(yall)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -46,9 +45,6 @@ solve_aoc_06_part1(FileName, Out):-
     length(UniqueLocs, Out),
     retractall(guard(_, _, _)).
 
-r([], []).
-r([guard(_, X, Y)|R], [loc(X, Y)|R1]):-
-    r(R, R1).
 
 % Let's keep it simple and just use a structure
 % state(Guard, Map) rather than fiddle around with
