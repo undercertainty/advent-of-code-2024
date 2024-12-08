@@ -45,7 +45,7 @@ true_equations([Equation|Rest], Out):-
 
 true_equation(String, Target):-
     string_codes(String, Codes),
-    phrase(eq(Target, Values), TargetCodes),
+    phrase(eq(Target, Values), Codes),
     true_equation1(Values, Target).
 
 true_equation1([N], N).
