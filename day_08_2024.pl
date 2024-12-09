@@ -57,23 +57,11 @@ get_antinode(X, Y, Antenna, Map):-
     Y is Y1-YDiff,
     in_map(X, Y, Map).
 
-get_antinode(X, Y, Antenna, Map, antenna(X1, Y1, Antenna), antenna(X2, Y2, Antenna)):-
-    get_antenna(X1, Y1, Antenna, Map),
-    get_antenna(X2, Y2, Antenna, Map),
-    [X1, Y1] \= [X2, Y2],
-    XDiff is X2-X1,
-    YDiff is Y2-Y1,
-    X is X1-XDiff,
-    Y is Y1-YDiff,
-    in_map(X, Y, Map).
-
 
 % makes things slightly tidier:
 in_map(X, Y, map(_Layout, Width, Height)):-
-    X>=1,
-    Y>=1,
-    X=<Width,
-    Y=<Height.
+    between(1, Width, X),
+    between(1, Height, Y).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
