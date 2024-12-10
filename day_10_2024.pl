@@ -47,8 +47,7 @@ get_map_value(X, Y, map(Map, _, _), Val):-
 solve_aoc_10_part1(FileName, Out):-
     get_file_as_map(FileName, Map),
     findall(Path, path(Map, Path), Paths),
-    maplist([Path, [Start, Finish]]>>(Path=[Start|Rest],
-                                      last(Rest, Finish)),
+    maplist([[Start|Path], [Start, Finish]]>>last(Path, Finish),
             Paths, StartDests),
     list_to_set(StartDests, UniqueStartDests),
     length(UniqueStartDests, Out).
