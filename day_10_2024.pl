@@ -1,8 +1,8 @@
 
 %%% 
-%%%
-%%% Part 1 looks suspiciously straightforward
-%%% for a weekend
+%%% Another map searcher. Nice of Eric to put in
+%%% lots of prolog-friendly tasks this year.
+%%% 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %
