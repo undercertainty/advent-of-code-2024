@@ -33,9 +33,6 @@ get_input_from_file(FileName, ListOfInts):-
 %
 % Part 1 looks fine, but I suspect I know where part 2's going...
 
-t(X):-
-    solve_aoc_11_part1("data/data_11_2024_test.txt", X).
-
 solve_aoc_11_part1(FileName, Out):-
     get_input_from_file(FileName, Stones),
     get_nth_state(25, Stones, StonesOut),
@@ -109,10 +106,6 @@ solve_aoc_11_part2(FileName, Out):-
 
 :- dynamic(visited/3).
 
-t(N, TargetDepth):-
-    retractall(visited(_, _, _)),
-    search(N, 0, TargetDepth).
-
 search(Num, TargetDepth, TargetDepth):-
     visited(Num, TargetDepth, _)
     ;
@@ -122,7 +115,6 @@ search(Num, _TargetDepth, Depth):-
     visited(Num, Depth, _).
 
 search(0, TargetDepth, Depth):-
-    \+ visited(0, Depth, _),
     Depth<TargetDepth,
     succ(Depth, D1),
     search(1, TargetDepth, D1),
@@ -130,7 +122,6 @@ search(0, TargetDepth, Depth):-
     assert(visited(0, Depth, Num)).
 
 search(N, TargetDepth, Depth):-
-    \+ visited(N, Depth, _),
     Depth<TargetDepth,
     N > 0,
     number_codes(N, Codes),
@@ -151,7 +142,6 @@ search(N, TargetDepth, Depth):-
     assert(visited(N, Depth, Sum)).
 
 search(N, TargetDepth, Depth):-
-    \+ visited(N, Depth, _),
     Depth<TargetDepth,
     N > 0,
     number_codes(N, Codes),
