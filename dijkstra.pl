@@ -84,10 +84,14 @@ dijkstra_search(Queue, Edges, Dists, Prevs, Visited, DistsOut, PrevsOut):-
     dijkstra_search(QueueNext, Edges, DistsNext, PrevsNext, [U|Visited], DistsOut, PrevsOut).
 
 % Draw items from the queue until we get one that's not
-% been visited (as there's no update_heap predicate)
+% been visited (as there's no update_heap predicate).
+%
+% Also, stop when all items remaining in the queue have
+% distance of inf (meaning they're unreachable).
 get_from_queue(Queue, DistU, U, Visited, QueueOut):-
     get_from_heap(Queue, DistU, U, QueueOut),
-    \+ member(U, Visited).
+    \+ member(U, Visited),
+    \+ DistU=inf.
 get_from_queue(Queue, DistU, U, Visited, QueueOut):-
     get_from_heap(Queue, _DistU1, U1, Queue1),
     member(U1, Visited),
