@@ -8,7 +8,6 @@
 :- use_module(library(lists)).
 :- use_module(library(readutil)).
 :- use_module(library(dcg/basics)).
-:- use_module(library(yall)).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +27,7 @@ aoc_19_part1(Out):-
 
 solve_aoc_19_part1(FileName, Out):-
     get_input(FileName, (Towels, Designs)),!,
-    include([X]>>valid_design(X, Towels), Designs, ValidDesigns),
+    include(valid_design(Towels), Designs, ValidDesigns),
     length(ValidDesigns, Out).
 
 get_input(FileName, Out):-
@@ -60,11 +59,11 @@ designs([Design|Designs]) --> nonblanks(DesignCodes),
                                {atom_codes(DesignAtom, DesignCodes),
                                  atom_chars(DesignAtom, Design)}.
 
-valid_design([], _).
-valid_design(Design, Towels):-
+valid_design(_, []).
+valid_design(Towels, Design):-
     member(Towel, Towels),
     append(Towel, DesignRest, Design),
-    valid_design(DesignRest, Towels).
+    valid_design(Towels, DesignRest).
 
 
 
@@ -72,9 +71,9 @@ valid_design(Design, Towels):-
 %
 %%% Part 2:
 %
-% I have to confess that I was most of the way
-% there with this part, but needed a nudge from
-% reddit to get the algorithm quite right.
+% I was most of the way there with this part,
+% but have to confess that I needed a nudge
+% from reddit to get the algorithm quite right.
 % Annoyed with myself, 'cos this sort of dynamic
 % programming task is classic traditional
 % parsing stuff.
@@ -89,7 +88,7 @@ aoc_19_part2(Out):-
 
 solve_aoc_19_part2(FileName, Out):-
     get_input(FileName, (Towels, Designs)),!,
-    maplist([X, Y]>>count_arrangements(X, Towels, Y), Designs, Arrangements),
+    maplist(count_arrangements(Towels), Designs, Arrangements),
     sumlist(Arrangements, Out).
 
 
@@ -97,7 +96,7 @@ solve_aoc_19_part2(FileName, Out):-
 %%% it's just a chart parser...
 
 
-count_arrangements(Design, Towels, Out):-
+count_arrangements(Towels, Design, Out):-
     get_edges(Design, Towels, Edges),
     !,
     length(Design, DesignLength),
@@ -108,7 +107,7 @@ count_arrangements(Design, Towels, Out):-
 % bottleneck.
 
 get_edges(Design, Towels, Edges):-
-    setof(Span, edge(Design, Towels, Span), Edges).
+    setof(Edge, edge(Design, Towels, Edge), Edges).
 
 edge(Design, Towels, edge(Start, End, Towel)):-
     member(Towel, Towels),
